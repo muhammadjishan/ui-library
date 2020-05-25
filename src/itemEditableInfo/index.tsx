@@ -17,7 +17,6 @@ export type ItemEditableInfoProps = A11yProps &
     // Prevent modification of the user input.
     // Used to trigger the behavior of the 'ItemEditableInfo non-editable' from the specs.
     readonly?: boolean
-    ariaLabel?: string
   }>
 
 const ItemEditableInfo = (props: ItemEditableInfoProps) => {

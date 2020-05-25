@@ -35,7 +35,7 @@ stories.add(
           onClick={action('onClick')}
           href={isLink ? <a href="#" /> : ''}
           disabled={disabled}
-          ariaLabel={text('Aria label', 'Aria label')}
+          aria-label={text('Aria label', 'Aria label')}
         />
       </Section>
     )

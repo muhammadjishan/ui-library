@@ -32,7 +32,6 @@ export interface ItemChoiceProps extends A11yProps {
   readonly onFocus?: (event: React.FocusEventHandler<HTMLElement>) => void
   readonly onMouseDown?: (event: React.MouseEvent<HTMLElement>) => void
   readonly onDoneAnimationEnd?: () => void
-  readonly ariaLabel?: string
 }
 
 export class ItemChoice extends PureComponent<ItemChoiceProps> {
@@ -93,7 +92,6 @@ export class ItemChoice extends PureComponent<ItemChoiceProps> {
       style,
       status,
       disabled,
-      ariaLabel,
     } = this.props
     const a11yAttrs = pickA11yProps<ItemChoiceProps>(this.props)
     const isRecommended = style === ItemChoiceStyle.RECOMMENDED
@@ -122,7 +120,6 @@ export class ItemChoice extends PureComponent<ItemChoiceProps> {
         highlighted={isRecommended}
         chevron={status === ItemStatus.DEFAULT}
         isClickable={!disabled}
-        ariaLabel={ariaLabel}
         {...a11yAttrs}
       />
     )

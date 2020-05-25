@@ -58,7 +58,7 @@ const BaseIcon = ({
     return (
       <div className={cc(['kirk-icon-wrapper', className])}>
         {icon}
-        <Badge className="kirk-icon-badge" ariaLabel={badgeAriaLabel}>
+        <Badge className="kirk-icon-badge" aria-label={badgeAriaLabel}>
           {badgeContent}
         </Badge>
       </div>

@@ -4,6 +4,7 @@ import isEmpty from 'lodash.isempty'
 import isString from 'lodash.isstring'
 
 import { color } from '../_utils/branding'
+import { A11yProps, pickA11yProps } from '../_utils/interfaces'
 import ItineraryCollapsible from '../_utils/itineraryCollapsible'
 import ItineraryLocation, { computeKeyFromPlace } from '../_utils/itineraryLocation'
 import BlankSeparator from '../blankSeparator'
@@ -11,9 +12,7 @@ import Bullet, { BulletTypes } from '../bullet'
 import SubHeader from '../subHeader'
 import Text, { TextDisplayType, TextTagType } from '../text'
 
-export interface ItineraryProps {
-  readonly ariaLabelledBy?: string
-  readonly ariaLabel?: string
+export interface ItineraryProps extends A11yProps {
   readonly places: Place[]
   readonly className?: string
   readonly fromAddon?: string
@@ -25,7 +24,7 @@ export interface ItineraryProps {
   readonly highlightRoad?: boolean
   readonly isCollapsible?: boolean
   readonly collapsedLabel?: string
-  readonly collapsedAriaLabel?: string
+  readonly collapsedAriaProps?: A11yProps
 }
 
 interface RootA11yProps {
@@ -100,27 +99,27 @@ const renderAddon = (type: string, addon: string, ariaLabel: string) => {
   )
 }
 
-const Itinerary = ({
-  ariaLabelledBy,
-  ariaLabel,
-  className,
-  places,
-  fromAddon,
-  toAddon,
-  fromAddonAriaLabel,
-  toAddonAriaLabel,
-  small = false,
-  headline = null,
-  highlightRoad = true,
-  isCollapsible = false,
-  collapsedLabel,
-  collapsedAriaLabel,
-}: ItineraryProps) => {
+const Itinerary = (props: ItineraryProps) => {
+  const {
+    className,
+    places,
+    fromAddon,
+    toAddon,
+    fromAddonAriaLabel,
+    toAddonAriaLabel,
+    small = false,
+    headline = null,
+    highlightRoad = true,
+    isCollapsible = false,
+    collapsedLabel,
+    collapsedAriaProps,
+  } = props
+  const a11yAttrs = pickA11yProps<ItineraryProps>(props)
   // Add the small class if we don't have "time" to prevent empty content
   const withTime = places.filter(p => !isEmpty(p.time)).length > 0
 
   // Remove aria-labelledby attribute if aria-label already used
-  const rootA11yProps = computeRootA11yProps(ariaLabel, ariaLabelledBy)
+  const rootA11yProps = computeRootA11yProps(a11yAttrs['aria-label'], a11yAttrs['aria-labelledby'])
 
   const intermediatePlaces = getIntermediatePlaces(places)
 
@@ -148,7 +147,7 @@ const Itinerary = ({
             <ItineraryCollapsible
               places={intermediatePlaces}
               label={collapsedLabel}
-              ariaLabel={collapsedAriaLabel}
+              {...collapsedAriaProps}
             />
           ) : (
             intermediatePlaces.map(place => (

@@ -20,11 +20,11 @@ stories.add('Default', () => {
     <Section>
       <ItemData
         mainTitle={text('Main title')}
-        ariaLabel={text('Aria label', 'Complementary info')}
+        aria-label={text('Aria label', 'Complementary info')}
         mainInfo={text('Main info', 'Main information')}
         data={text('Data', 'Data')}
         dataInfo={text('Data info')}
-        dataAriaLabel={text('Data aria label', 'Data aria label')}
+        dataAriaProps={{ 'aria-label': text('Data aria label', 'Data aria label') }}
         dataStrikeThrough={dataStrikeThrough}
         disabled={boolean('Disabled', false)}
         mainTitleButtonAddon={

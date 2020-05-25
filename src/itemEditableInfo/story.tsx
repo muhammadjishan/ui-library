@@ -18,7 +18,7 @@ stories.add(
         href="http://google.fr`"
         label="Last name"
         value="Doe"
-        ariaLabel="Edit last name: Doe"
+        aria-label="Edit last name: Doe"
       />
       <ItemEditableInfo label="Gender (readonly)" value="Female" readonly />
       <ItemEditableInfo

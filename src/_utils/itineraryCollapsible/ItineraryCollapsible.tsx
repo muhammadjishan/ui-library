@@ -5,14 +5,14 @@ import { canUseEventListeners } from 'exenv'
 import Bullet, { BulletTypes } from '../../bullet'
 import Text, { TextDisplayType, TextTagType } from '../../text'
 import { color } from '../branding'
+import { A11yProps, pickA11yProps } from '../interfaces'
 import ItineraryLocation, { computeKeyFromPlace } from '../itineraryLocation'
 import KEYCODES from '../keycodes'
 
-export interface ItineraryCollapsibleProps {
+export interface ItineraryCollapsibleProps extends A11yProps {
   readonly places: Place[]
   readonly className?: string
   readonly label?: string
-  readonly ariaLabel?: string
 }
 
 interface ItineraryCollapsibleState {
@@ -25,7 +25,6 @@ export default class ItineraryCollapsible extends PureComponent<ItineraryCollaps
   static defaultProps: Partial<ItineraryCollapsibleProps> = {
     className: '',
     label: '',
-    ariaLabel: '',
   }
 
   state: ItineraryCollapsibleState = {
@@ -64,7 +63,8 @@ export default class ItineraryCollapsible extends PureComponent<ItineraryCollaps
   }
 
   render() {
-    const { places, className, label, ariaLabel } = this.props
+    const { places, className, label } = this.props
+    const a11yAttrs = pickA11yProps<ItineraryCollapsibleProps>(this.props)
     const baseClassName = 'kirk-itineraryCollapsible'
     const classNames = cc([
       baseClassName,
@@ -83,7 +83,7 @@ export default class ItineraryCollapsible extends PureComponent<ItineraryCollaps
         onClick={this.onClick}
         aria-pressed={!this.state.collapsed}
         aria-expanded={!this.state.collapsed}
-        aria-label={ariaLabel}
+        {...a11yAttrs}
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
         role="button"
       >

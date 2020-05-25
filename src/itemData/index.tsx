@@ -8,14 +8,13 @@ import { TextDisplayType } from '../text'
 export interface ItemDataProps extends A11yProps {
   readonly data: string | JSX.Element
   readonly dataStrikeThrough?: boolean
-  readonly dataAriaLabel?: string
+  readonly dataAriaProps?: A11yProps
   readonly mainInfo: React.ReactNode
   readonly className?: string
   readonly mainTitle?: string
   readonly mainTitleButtonAddon?: React.ReactElement<Button>
   readonly dataInfo?: string
   readonly tag?: JSX.Element
-  readonly ariaLabel?: string
   readonly disabled?: boolean
 }
 
@@ -24,13 +23,12 @@ const ItemData = (props: ItemDataProps) => {
     mainInfo,
     data,
     dataStrikeThrough,
-    dataAriaLabel,
+    dataAriaProps,
     className,
     mainTitle,
     mainTitleButtonAddon,
     dataInfo,
     tag,
-    ariaLabel,
     disabled,
   } = props
   const a11yAttrs = pickA11yProps<ItemDataProps>(props)
@@ -42,11 +40,10 @@ const ItemData = (props: ItemDataProps) => {
       leftBody={mainInfo}
       rightTitle={data}
       rightTitleStrikeThrough={dataStrikeThrough}
-      rightTitleAriaLabel={dataAriaLabel}
+      rightTitleAriaProps={dataAriaProps}
       rightTitleDisplay={TextDisplayType.SUBHEADERSTRONG}
       rightBody={dataInfo}
       tag={tag}
-      ariaLabel={ariaLabel}
       disabled={disabled}
       {...a11yAttrs}
     />
