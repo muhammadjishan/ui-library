@@ -1,5 +1,6 @@
 # Unreleased
 
+- **[BREAKING CHANGE]** Move non API components in an `_internal` folder
 - **[UPDATE]** Add invert animation in the `SearchForm`.
   [...]
 
