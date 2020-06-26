@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import cc from 'classcat'
 
 import { color, transition } from '../_utils/branding'
@@ -27,6 +27,8 @@ export interface LoaderProps {
   done?: boolean
   layoutMode?: LoaderLayoutMode
   onDoneAnimationEnd?: () => void
+  loadingAriaLabel?: string
+  loadedAriaLabel?: string
 }
 
 export class Loader extends PureComponent<LoaderProps> {
@@ -36,6 +38,8 @@ export class Loader extends PureComponent<LoaderProps> {
     size: 48,
     done: false,
     onDoneAnimationEnd() {},
+    loadingAriaLabel: 'Loading',
+    loadedAriaLabel: 'Loaded',
   }
 
   validate = () => {
@@ -79,19 +83,32 @@ export class Loader extends PureComponent<LoaderProps> {
   }
 
   render() {
-    const { className, size, done } = this.props
+    const { className, size, done, loadingAriaLabel, loadedAriaLabel } = this.props
     const iconSize = {
       width: `${size}px`,
       height: `${size}px`,
     }
-
+    const loaderStatusLabel = done ? loadedAriaLabel : loadingAriaLabel
     return (
-      <div className={cc([className, this.computeLayoutClass()])}>
-        <div className={cc([{ 'kirk-loader--done': done }])} style={iconSize}>
-          {!done && <CircleIcon iconColor={color.green} size={size} spinning />}
-          {done && <CheckIcon iconColor={color.white} size={size / 2} validate />}
+      <Fragment>
+        <div
+          role="progressbar"
+          aria-valuetext={loaderStatusLabel}
+          className={cc([className, this.computeLayoutClass()])}
+        >
+          <div className={cc([{ 'kirk-loader--done': done }])} style={iconSize}>
+            {!done && <CircleIcon iconColor={color.green} size={size} spinning />}
+            {done && <CheckIcon iconColor={color.white} size={size / 2} validate />}
+          </div>
         </div>
-      </div>
+        {/*
+          The progressbar role does not announce anything when changing state. We associate the
+          role='progressbar' with a role='status' to get loading state's announcements.
+        */}
+        <div className="visually-hidden" role="status">
+          {loaderStatusLabel}
+        </div>
+      </Fragment>
     )
   }
 }
